@@ -1,0 +1,28 @@
+import { REST } from "@discordjs/rest";
+import fs from "node:fs";
+import { Routes } from "discord-api-types/v9";
+require("dotenv").config();
+
+const commands = [];
+const commandFiles = fs
+  .readdirSync("./dist/commands")
+  .filter((file) => file.endsWith(".js"));
+
+console.log("found commands in: ", commandFiles);
+
+for (const file of commandFiles) {
+  const command = require(`./commands/${file}`);
+  commands.push(command.data.toJSON());
+}
+
+const rest = new REST({ version: "9" }).setToken(process.env.TOKEN!);
+
+rest
+  .put(
+    Routes.applicationGuildCommands(process.env.CLIENTID!, process.env.GUILDID!),
+    {
+      body: commands,
+    }
+  )
+  .then(() => console.log("Successfully registered application commands."))
+  .catch(console.error);

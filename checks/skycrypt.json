@@ -1,0 +1,134 @@
+
+{
+  "profile_id": "string",
+  "cute_name": "string",
+  "dungeons": {
+    "catacombs": {
+      "visited": true,
+      "level": {
+        "xp": 0,
+        "level": 0,
+        "maxLevel": 0,
+        "xpCurrent": 0,
+        "xpForNext": 0,
+        "progress": 0
+      },
+      "highest_floor": "string",
+      "floors": {
+        "1": {
+          "name": "string",
+          "icon_texture": "string",
+          "stats": {
+            "times_played": 0,
+            "tier_completions": 0,
+            "fastest_time": 0,
+            "best_score": 0,
+            "mobs_killed": 0,
+            "most_mobs_killed": 0,
+            "most_healing": 0,
+            "watcher_kills": 0,
+            "fastest_time_s": 0,
+            "fastest_time_s_plus": 0
+          },
+          "best_runs": [
+            {
+              "timestamp": 0,
+              "score_exploration": 0,
+              "score_speed": 0,
+              "score_skill": 0,
+              "score_bonus": 0,
+              "dungeon_class": "string",
+              "teammates": [
+                "string"
+              ],
+              "elapsed_time": 0,
+              "damage_dealt": 0,
+              "deaths": 0,
+              "mobs_kills": 0,
+              "secrets_found": 0,
+              "damage_mitigated": 0,
+              "ally_healing": 0
+            }
+          ],
+          "most_damage": {
+            "class": "string",
+            "value": 0
+          },
+          "current": true
+        }
+      }
+    },
+    "classes": {
+      "healer": {
+        "experience": {
+          "xp": 0,
+          "level": 0,
+          "maxLevel": 0,
+          "xpCurrent": 0,
+          "xpForNext": 0,
+          "progress": 0
+        },
+        "current": true
+      },
+      "mage": {
+        "experience": {
+          "xp": 0,
+          "level": 0,
+          "maxLevel": 0,
+          "xpCurrent": 0,
+          "xpForNext": 0,
+          "progress": 0
+        },
+        "current": true
+      },
+      "beserk": {
+        "experience": {
+          "xp": 0,
+          "level": 0,
+          "maxLevel": 0,
+          "xpCurrent": 0,
+          "xpForNext": 0,
+          "progress": 0
+        },
+        "current": true
+      },
+      "archer": {
+        "experience": {
+          "xp": 0,
+          "level": 0,
+          "maxLevel": 0,
+          "xpCurrent": 0,
+          "xpForNext": 0,
+          "progress": 0
+        },
+        "current": true
+      },
+      "tank": {
+        "experience": {
+          "xp": 0,
+          "level": 0,
+          "maxLevel": 0,
+          "xpCurrent": 0,
+          "xpForNext": 0,
+          "progress": 0
+        },
+        "current": true
+      }
+    },
+    "used_classes": true,
+    "unlocked_collections": true,
+    "boss_collections": {
+      "1": {
+        "name": "string",
+        "texture": "string",
+        "tier": 0,
+        "killed": 0,
+        "claimed": [
+          "string"
+        ]
+      }
+    },
+    "selected_class": "string",
+    "secrets_found": 0
+  }
+}
