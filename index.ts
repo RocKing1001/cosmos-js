@@ -1,19 +1,30 @@
 import { Collection, Client, Intents, Interaction } from "discord.js";
 import fs from "node:fs";
 
-const client: Client<boolean>| any = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client: Client<boolean> | any = new Client({
+  intents: [Intents.FLAGS.GUILDS],
+});
 
 require("dotenv").config();
 
 require("./commands");
 
-const TOKEN = process.env.TOKEN
+const TOKEN = process.env.TOKEN;
 
-client.on('ready', () => {
+client.on("ready", () => {
   console.log(`Logged in as ${client.user!.tag}!`);
+  client.user.setPresence({
+    activities: [
+      {
+        name: "over the guild",
+        type: "WATCHING",
+      },
+    ],
+    status: "idle",
+  });
 });
 
-client.commands = new Collection()
+client.commands = new Collection();
 
 const commandFiles = fs
   .readdirSync("./dist/commands")
