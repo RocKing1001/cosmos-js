@@ -1,5 +1,10 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CacheType, CommandInteraction, GuildMember, Interaction } from "discord.js";
+import {
+  CacheType,
+  CommandInteraction,
+  GuildMember,
+  Interaction,
+} from "discord.js";
 import runchecks from "../checks/runchecks";
 
 module.exports = {
@@ -14,7 +19,11 @@ module.exports = {
     ),
   async execute(interaction: Interaction) {
     const options = (interaction as any).options;
-    const member = (interaction.member as GuildMember)
+    const member = interaction.member as GuildMember;
+
+    await (interaction as CommandInteraction<CacheType>).deferReply({
+      ephemeral: true,
+    });
 
     let username = options.getString("username");
     const response = await runchecks(username!);
@@ -34,25 +43,26 @@ module.exports = {
         reply = `You dont own this profile. If this is incorrect, please try refreshing your socials on hypixel, and if THAT does not work, please contact the admins`;
       }
       // SUCCESS
-      const role = member.guild.roles.cache.find(
-        (i) => i.id == roleid
-      );
+      const role = member.guild.roles.cache.find((i) => i.id == roleid);
 
       reply = `You have been verified and your nick has been changed to **${nick}**`;
-      role != undefined ? member.roles.add(role) : reply = "Contact an admin and tell them that there is some issue with role ids"
+      role != undefined
+        ? member.roles.add(role)
+        : (reply =
+            "Contact an admin and tell them that there is some issue with role ids");
       try {
-      member.setNickname(nick)
+        member.setNickname(nick);
       } catch {
-        reply = "cannot change your username"
+        reply = "cannot change your username";
       }
     } else {
       // ERROR
       reply = "An error occured, please contact the admins";
     }
-    await (interaction as CommandInteraction<CacheType>).reply({
+    await (interaction as CommandInteraction<CacheType>).followUp({
       content: reply,
       ephemeral: true,
     });
-    return // safety return
+    return; // safety return
   },
 };
