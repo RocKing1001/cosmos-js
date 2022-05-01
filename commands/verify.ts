@@ -41,19 +41,20 @@ module.exports = {
       if (user != connectedDisc) {
         // ERROR
         reply = `You dont own this profile. If this is incorrect, please try refreshing your socials on hypixel, and if THAT does not work, please contact the admins`;
-      }
-      // SUCCESS
-      const role = member.guild.roles.cache.find((i) => i.id == roleid);
+      } else {
+        // SUCCESS
+        const role = member.guild.roles.cache.find((i) => i.id == roleid);
 
-      reply = `You have been verified and your nick has been changed to **${nick}**`;
-      role != undefined
-        ? member.roles.add(role)
-        : (reply =
-            "Contact an admin and tell them that there is some issue with role ids");
-      try {
-        member.setNickname(nick);
-      } catch {
-        reply = "cannot change your username";
+        reply = `You have been verified and your nick has been changed to **${nick}**`;
+        role != undefined
+          ? member.roles.add(role)
+          : (reply =
+              "Contact an admin and tell them that there is some issue with role ids");
+        try {
+          member.setNickname(nick);
+        } catch {
+          reply = "cannot change your username";
+        }
       }
     } else {
       // ERROR

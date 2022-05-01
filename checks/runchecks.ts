@@ -13,13 +13,15 @@ export default async function runchecks(username: string) {
     let currProfileID;
     let weight = 0;
     let discord = "";
+    let souls = 0;
 
     for (let key in profileList) {
       const currProfile = profileList[key] as Profiles;
       if (currProfile.current) {
         currProfileID = currProfile.cute_name;
         weight = Number(currProfile.data.weight.senither.overall);
-        discord = currProfile.data.social.DISCORD
+        discord = currProfile.data.social.DISCORD;
+        souls = currProfile.data.fairy_souls.total
       }
     }
 
@@ -45,7 +47,8 @@ export default async function runchecks(username: string) {
     if (
       dungcheck == undefined &&
       mastercheck == undefined &&
-      weightcheck == undefined
+      weightcheck == undefined &&
+      souls < 200
     ) {
       return null;
     }
@@ -54,15 +57,17 @@ export default async function runchecks(username: string) {
     if (dungcheck != undefined && dungcheck![2] >= rank) {
       rankid = dungcheck![1] as number;
       rankname = dungcheck![0] as string;
-      rank = dungcheck![2] as number
-    } if (mastercheck != undefined && mastercheck[2] >= rank) {
+      rank = dungcheck![2] as number;
+    }
+    if (mastercheck != undefined && mastercheck[2] >= rank) {
       rankid = mastercheck![1] as number;
       rankname = mastercheck![0] as string;
-      rank = mastercheck![2] as number
-    } if (weightcheck != undefined && weightcheck![2] >= rank) {
+      rank = mastercheck![2] as number;
+    }
+    if (weightcheck != undefined && weightcheck![2] >= rank) {
       rankid = weightcheck![1] as number;
       rankname = weightcheck![0] as string;
-      rank = weightcheck![2] as number
+      rank = weightcheck![2] as number;
     }
     console.log(`\x1b[34mThe rank is \x1b[33m${rankname}\x1b[0m`);
 
@@ -102,6 +107,7 @@ function dungChecks(player: SkyCryptDung) {
       }
       return "clean";
     },
+    comps: "$.dungeons.catacombs.floors.7.stats.tier_completions",
   };
 
   const dungreq = {
@@ -111,16 +117,18 @@ function dungChecks(player: SkyCryptDung) {
         role_id: 909453514953064469,
         cata: 39,
         sec: 20000,
-        pb: [7, "any", 450000],
+        pb: [7, "any", 420000],
         rank: 3,
+        comps: 300,
       },
       {
         name: "Necron",
         role_id: 804114592774881330,
         cata: 35,
         sec: 10000,
-        pb: [7, "s+", 480000],
+        pb: [7, "s+", 450000],
         rank: 2,
+        comps: null,
       },
       {
         name: "Sadan",
@@ -129,14 +137,16 @@ function dungChecks(player: SkyCryptDung) {
         sec: 7000,
         pb: null,
         rank: 1,
+        comps: null,
       },
       {
         name: "Livid",
         role_id: 804114416898801735,
         cata: 30,
-        sec: 5000,
+        sec: 4000,
         pb: null,
         rank: 0,
+        comps: null,
       },
     ],
   };
@@ -151,9 +161,12 @@ function dungChecks(player: SkyCryptDung) {
         dungreq.req[i].pb == null || // if == null, the evaluation stops here
         jp.query(player, map.pb(dungreq.req[i].pb![1]))[0] <=
           dungreq.req[i].pb![2];
+      const comps =
+        dungreq.req[i].comps == null || // if == null, the evaluation stops here
+        jp.query(player, map.comps)[0] >= dungreq.req[i].comps!;
 
       //console.log({cata, secrets, pb})
-      if (cata && secrets && pb) {
+      if (cata && secrets && pb && comps) {
         roles = [
           dungreq.req[i].name,
           dungreq.req[i].role_id,
@@ -198,7 +211,7 @@ function masterChecks(player: SkyCryptDung) {
         role_id: 909453514953064469,
         cata: 40,
         sec: 12000,
-        pb: [5, "any", 360000],
+        pb: [5, "any", 300000],
         rank: 3,
       },
       {
@@ -206,7 +219,7 @@ function masterChecks(player: SkyCryptDung) {
         role_id: 804114592774881330,
         cata: 36,
         sec: 7500,
-        pb: [3, "s", 300000],
+        pb: [3, "s", 240000],
         rank: 2,
       },
       {
@@ -273,7 +286,7 @@ function weightChecks(weight: number) {
       {
         name: "Necron",
         role_id: 804114592774881330,
-        weight: 5500,
+        weight: 6900,
         rank: 2,
       },
       {
